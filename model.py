@@ -1,4 +1,5 @@
 from datetime import date
+
 class Hisa:
     def __init__(self, ime, proracun):
         self.ime = ime
@@ -61,7 +62,7 @@ class Prostor:
         skupna_cena = 0
         for delo in self.dela:
             skupna_cena += delo.cena
-        return skupna_cena
+        return skupna_cena 
     
 class Delo:
     def __init__(self, ime, opis, tezavnost, cena, material = None, rok = None):
