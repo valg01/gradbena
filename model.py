@@ -74,8 +74,8 @@ class Delo:
         self.rok = rok
         self.opravljeno = False
 
-    def opravi(self):
-        self.opravljeno = True
+    def spremeni_opravljeno(self):
+        self.opravljeno = not self.opravljeno
     
     def povecaj_ceno(self, k):
         self.cena += k
