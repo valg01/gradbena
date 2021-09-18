@@ -1,1 +1,3 @@
-import model
+from model import Hisa, Prostor, Delo
+
+
