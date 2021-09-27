@@ -15,7 +15,7 @@ class Hisa:
     def odstrani_prostor(self, prostor):
         self.prostori.remove(prostor)
 
-    def zamenjaj_spisek(self, prostor):
+    def zamenjaj_prostor(self, prostor):
         self.aktualni_prostor = prostor
 
     def stroski(self):
