@@ -42,7 +42,7 @@ def prikaz_prostora(prostor):
     else:
         return f"Za {prostor.ime} ste porabili {strosek}. Super! Opravili ste že vseh {dela} del."
 
-def prikaz_del(delo):
+def prikaz_dela(delo):
     if delo.zamuja() and not delo.opravljeno:
         return f"{delo.tezavnost} delo: {delo} je neopravljeno in zamuja!!!!"
     elif not delo.opravljeno:
