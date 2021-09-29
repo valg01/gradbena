@@ -37,6 +37,19 @@ def prikaz_prostora(prostor):
     strosek = prostor.strosek_prostora()
     if zamujena_dela:
         return f"Za {prostor.ime} ste porabili {strosek}. Vseh del je {dela}, od tega jih je {neopravljena_dela} neopravljenih, {zamujena_dela} pa jih zamuja."
-    else:
+    elif not zamujena_dela and neopravljena_dela:
         return f"Za {prostor.ime} ste porabili {strosek}. Vseh del je {dela}, od tega jih je {neopravljena_dela} neopravljenih"
+    else:
+        return f"Za {prostor.ime} ste porabili {strosek}. Super! Opravili ste že vseh {dela} del."
+
+def prikaz_del(delo):
+    if delo.zamuja() and not delo.opravljeno:
+        return f"{delo.tezavnost} delo: {delo} je neopravljeno in zamuja!!!!"
+    elif not delo.opravljeno:
+        return f"{delo.tezavnost} delo: {delo} je neopravljeno"
+    else:
+        return f"{delo.tezavnost} delo: {delo} je opravljeno"
+
+    
+
 
