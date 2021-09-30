@@ -53,7 +53,9 @@ def prikaz_prostora(prostor):
 def prikaz_dela(delo):
     if delo.zamuja() and not delo.opravljeno:
         return f"{delo.tezavnost} delo: {delo} je neopravljeno in zamuja!!!! Za delo potrebujete {delo.material}, ocenjen strošek je {delo.cena} EUR."
-    elif not delo.opravljeno:
+    elif not delo.opravljeno and delo.rok != None:
+        return f"{delo.tezavnost} delo: {delo} je neopravljeno, rok ima {delo.rok}! Za delo potrebujete {delo.material}, ocenjen strošek je {delo.cena} EUR."
+    elif not delo.opravljeno and not delo.rok:
         return f"{delo.tezavnost} delo: {delo} je neopravljeno! Za delo potrebujete {delo.material}, ocenjen strošek je {delo.cena} EUR."
     else:
         return f"{delo.tezavnost} delo: {delo} je opravljeno. Porabili ste {delo.cena} EUR"
@@ -69,7 +71,54 @@ def izberi_delo(model):
         ]
     )
 
+def tekstovni_vmesnik():
+    pozdrav()
+    while True:
+        prikazi_aktualna_dela()
+        ukaz = izberi_moznost(
+            [
+                (PREIMENUJ_HISO, "preimenuj hišo"),
+                (DODAJ_PROSTOR, "dodaj nov prostor"),
+                (POBRISI_PROSTOR, "pobriši prostor"),
+                (ZAMENJAJ_PROSTOR, "prikaži drug prostor"),
+                (DODAJ_PRORACUN, "povečaj proračun"),
+                (DODAJ_STROSEK, "vpiši stroške"),
+                (DODAJ_DELO, "dodaj novo delo"),
+                (POBRISI_DELO, "pobriši delo"),
+                (OPRAVI_DELO, "opravi delo"),
+                (IZHOD, "zapri program")
+            ]
+        )
+        if ukaz == 1:
+            preimenuj_hiso()
+        elif ukaz == 2:
+            dodaj_prostor()
+        elif ukaz == 3:
+            pobrisi_prostor()
+        elif ukaz == 4:
+            zamenjaj_prostor()
+        elif ukaz == 5:
+            dodaj_proracun()
+        elif ukaz == 6:
+            dodaj_strosek()
+        elif ukaz == 7:
+            dodaj_delo()
+        elif ukaz == 8:
+            pobrisi_delo()
+        elif ukaz == 9:
+            opravi_delo()
+        elif ukaz == 10:
+            moj_model.shrani_v_dat(IME_DATOTEKE)
+            print("Nasvidenje! Uspešen dan ;)")
 
-    
+def pozdrav():
+    print("Dobrodošli v urejevalniku gradbenih del.")
 
+def prikazi_aktualna_dela():
+    if moj_model.aktualni_prostor:
+        for delo in moj_model.aktualni_prostor.dela:
+            print(f"- {prikaz_dela(delo)}")
+    else:
+        print("Nimate še nobenega prostora, zato ga najprej dodajte")
+        dodaj_prostor()
 
