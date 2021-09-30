@@ -1,7 +1,7 @@
 from datetime import date
 
 class Hisa:
-    def __init__(self, ime, proracun):
+    def __init__(self, ime, proracun = None):
         self.ime = ime
         self.proracun = proracun
         self.prostori = []
@@ -26,7 +26,10 @@ class Hisa:
         return strosek
     
     def ostanek_denarja(self):
-        return self.proracun - self.stroski()
+        if not self.proracun:
+            return -1 * self.stroski
+        else:
+            return self.proracun - self.stroski()
 
     def stevilo_opravljenih(self):
         opravljeni = 0
