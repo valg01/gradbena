@@ -80,18 +80,20 @@ class Hisa:
     
     def dodaj_delo(self, delo):
         self.aktualni_prostor.dodaj_delo(delo)
-        self.proracun -= delo.cena
+        nov_proracun = int(self.proracun) - int(delo.cena)
+        self.proracun = nov_proracun
     
     def odstrani_delo(self, delo):
         self.aktualni_prostor.odstrani_delo(delo)
-        self.proracun += delo.cena
+        nov_proracun = int(self.proracun) + int(delo.cena)
+        self.proracun = nov_proracun
     
     def v_slovar(self):
         return {
         "ime" : self.ime,
         "proracun" : self.proracun,
         "prostori": [prostor.v_slovar() for prostor in self.prostori],
-        "aktualni_prostor": self.prostori.index(self.aktualni_prosor) if self.aktualni_prostor else None,
+        "aktualni_prostor": self.prostori.index(self.aktualni_prostor) if self.aktualni_prostor else None,
         }
 
     @staticmethod
