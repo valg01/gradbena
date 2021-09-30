@@ -8,6 +8,9 @@ class Hisa:
         self.prostori = []
         self.aktualni_prostor = None
     
+    def preimenuj(self, novo_ime):
+        self.ime = novo_ime
+    
     def dodaj_prostor(self, prostor):
         self.prostori.append(prostor)
         if not self.aktualni_prostor:
