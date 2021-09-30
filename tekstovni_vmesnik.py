@@ -74,6 +74,10 @@ def izberi_delo(model):
 def tekstovni_vmesnik():
     pozdrav()
     while True:
+        if not moj_model.proracun:
+            zacetni_proracun()
+        elif int(moj_model.proracun) <= 0:
+            zmanjka_proracun()
         prikazi_aktualna_dela()
         ukaz = izberi_moznost(
             [
@@ -113,6 +117,16 @@ def tekstovni_vmesnik():
 
 def pozdrav():
     print("Dobrodošli v urejevalniku gradbenih del.")
+
+def zacetni_proracun():
+    print("Niste še vnesli proračuna, zato to postorite sedaj.")
+    znesek = input("Proračun> ")
+    moj_model.proracun = znesek
+
+def zmanjka_proracun():
+    print("Zmanjkalo Vam je denarja, zato ga najprej dodajte.")
+    znesek = input("Proračun> ")
+    moj_model.proracun = znesek
 
 def prikazi_aktualna_dela():
     if moj_model.aktualni_prostor:
