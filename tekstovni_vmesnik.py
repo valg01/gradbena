@@ -1,6 +1,8 @@
 from typing import ValuesView
 from model import Hisa, Prostor, Delo
 
+model = Hisa()
+
 DODAJ_PROSTOR = 1
 POBRISI_PROSTOR = 2
 ZAMENJAJ_PROSTOR = 3
@@ -49,6 +51,18 @@ def prikaz_dela(delo):
         return f"{delo.tezavnost} delo: {delo} je neopravljeno"
     else:
         return f"{delo.tezavnost} delo: {delo} je opravljeno"
+
+def izberi_prostor(model):
+    return izberi_moznost([(prostor, prikaz_prostora(prostor)) for prostor in model.prostori])
+
+def izberi_opravilo(model):
+    return izberi_moznost(
+        [
+            (delo, prikaz_dela(delo))
+            for delo in model.aktualni_spisek.dela
+        ]
+    )
+
 
     
 
