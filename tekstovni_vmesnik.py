@@ -28,7 +28,7 @@ def preberi_stevilo():
             print("Vaš vnos ni število. Poskusite ponovno.")
 
 def izberi_moznost(moznosti):
-    for i, (moznosti, opis) in enumerate(moznosti, 1):
+    for i, (moznost, opis) in enumerate(moznosti, 1):
         print(f"{i}) {opis}")
     while True:
         i = preberi_stevilo()
@@ -121,4 +121,50 @@ def prikazi_aktualna_dela():
     else:
         print("Nimate še nobenega prostora, zato ga najprej dodajte")
         dodaj_prostor()
+
+def preimenuj_hiso():
+    novo_ime = input("Novo ime> ")
+    moj_model.preimenuj(novo_ime)
+
+def dodaj_prostor():
+    print("Vnesi podatke novega prostora.")
+    ime = input("Ime> ")
+    nov_prostor = Prostor(ime)
+    moj_model.dodaj_prostor(nov_prostor)
+
+def pobrisi_prostor():
+    prostor = izberi_prostor(moj_model)
+    moj_model.odstrani_prostor(prostor)
+
+def zamenjaj_prostor():
+    print("Izberite želeni prostor")
+    zeljeni = izberi_prostor(moj_model)
+    moj_model.zamenjaj_prostor(zeljeni)
+
+def dodaj_proracun():
+    znesek = input("Vnesite znesek, ki ga želite dodati proračunu> ")
+    moj_model.dodaj_proracun(znesek)
+
+def dodaj_strosek():
+    znesek = input("Vnesite strošek> ")
+    moj_model.zmanjsaj_proracun(znesek)
+
+def dodaj_delo():
+    print("Vnesi podatke novega dela.")
+    ime = input("Ime> ")
+    opis = input("Opis> ")
+    tezavnost = input("Vnesite zahtevno, srednje ali lahko> ")
+    cena = input("Cena> ")
+    material = input("Material> ")
+    rok = input("Rok> ")
+    novo_delo = Delo(ime ,opis, tezavnost, cena, material, rok)
+    moj_model.dodaj_delo(novo_delo)
+
+def pobrisi_delo():
+    delo = izberi_delo(moj_model)
+    moj_model.odstrani_delo(delo)
+
+def opravi_delo():
+    delo = izberi_delo(moj_model)
+    delo.spremeni_opravljeno()
 

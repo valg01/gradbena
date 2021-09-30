@@ -40,6 +40,13 @@ class Hisa:
             self.proracun = k
         else:
             self.proracun += k
+    
+    def zmanjsaj_proracun(self, k):
+        if not self.dodaj_proracun:
+            self.proracun = -1 * k
+        else:
+            self.proracun -= k
+
 
     def stevilo_opravljenih(self):
         opravljeni = 0
@@ -73,9 +80,11 @@ class Hisa:
     
     def dodaj_delo(self, delo):
         self.aktualni_prostor.dodaj_delo(delo)
+        self.proracun -= delo.cena
     
     def odstrani_delo(self, delo):
         self.aktualni_prostor.odstrani_delo(delo)
+        self.proracun += delo.cena
     
     def v_slovar(self):
         return {
