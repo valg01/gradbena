@@ -82,6 +82,35 @@ class Hisa:
         "aktualni_prostor": self.prostori.index(self.aktualni_prosor) if self.aktualni_prostor else None,
         }
 
+    @staticmethod
+    def iz_slovarja(slovar):
+        hisa = Hisa(slovar["ime"], slovar["proracun"])
+        hisa.prostori = [
+            Prostor.iz_slovarja(prostor) for prostor in slovar["prostori"]
+        ]
+        if slovar["aktualni_prosor"] is not None:
+            hisa.aktualni_prostor = hisa.prostori[slovar["aktualni_prostor"]]
+        return hisa
+    
+    def shrani_v_dat(self, dat):
+        with open(dat, "w", encoding="utf-8") as f:
+            slovar = self.v_slovar()
+            json.dump(slovar, f)
+    
+    @staticmethod
+    def preberi_iz_dat(dat):
+        with open(dat, "r", encoding="utf-8") as f:
+            slovar = json.load(f)
+            return Hisa.iz_slovarja(slovar)
+        
+    def preveri_podatke_nove_hise(self, ime):
+        napake = {}
+        if not ime:
+            napake["ime"] = "Ime mora biti neprazno."
+        for prostor in self.prostori:
+            if prostor.ime == ime:
+                napake["ime"] = "Ime je že zasedeno"
+        return napake
 
 class Prostor:
     def __init__(self, ime):
@@ -190,4 +219,3 @@ class Delo:
             date.fromisoformat(slovar["rok"]) if slovar["rok"] else None,
             slovar["opravljeno"]
         )
-
