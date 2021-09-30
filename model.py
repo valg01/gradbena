@@ -1,4 +1,5 @@
 from datetime import date
+import json
 
 class Hisa:
     def __init__(self, ime, proracun = None):
@@ -30,6 +31,12 @@ class Hisa:
             return -1 * self.stroski
         else:
             return self.proracun - self.stroski()
+    
+    def dodaj_proracun(self, k):
+        if not self.proracun:
+            self.proracun = k
+        else:
+            self.proracun += k
 
     def stevilo_opravljenih(self):
         opravljeni = 0
@@ -66,6 +73,15 @@ class Hisa:
     
     def odstrani_delo(self, delo):
         self.aktualni_prostor.odstrani_delo(delo)
+    
+    def v_slovar(self):
+        return {
+        "ime" : self.ime,
+        "proracun" : self.proracun,
+        "prostori": [prostor.v_slovar() for prostor in self.prostori],
+        "aktualni_prostor": self.prostori.index(self.aktualni_prosor) if self.aktualni_prostor else None,
+        }
+
 
 class Prostor:
     def __init__(self, ime):
@@ -101,16 +117,38 @@ class Prostor:
             skupna_cena += delo.cena
         return skupna_cena 
     
+    def mnozica_materialov(self):
+        mn = {}
+        for delo in self.dela:
+            if not delo.material:
+                pass
+            else:
+                mn.add(delo.material)
+        return mn
+    
+    def v_slovar(self):
+        return {
+            "ime" : self.ime,
+            "dela" : [delo.v_slovar() for delo in self.dela],
+        }
+    
+    @staticmethod
+    def iz_slovarja(slovar):
+        prostor = Prostor(slovar["ime"])
+        prostor.dela = [
+            Delo.iz_slovarja(sl_delo) for sl_delo in slovar["dela"]
+        ]
+        return prostor
     
 class Delo:
-    def __init__(self, ime, opis, tezavnost, cena, material = None, rok = None):
+    def __init__(self, ime, opis, tezavnost, cena, material = None, rok = None, opravljeno = False):
         self.ime = ime
         self.opis = opis
         self.material = material
         self.tezavnost = tezavnost
         self.cena = cena
         self.rok = rok
-        self.opravljeno = False
+        self.opravljeno = opravljeno
 
     def spremeni_opravljeno(self):
         self.opravljeno = not self.opravljeno
@@ -130,4 +168,26 @@ class Delo:
                 return False
             return True
 
+    def v_slovar(self):
+        return {
+            "ime" : self.ime,
+            "opis" : self.opis,
+            "tezavnost" : self.tezavnost,
+            "cena" : self.cena,
+            "material" : self.material,
+            "rok" : date.isoformat(self.rok) if self.rok else None,
+            "opravljeno" : self.opravljeno,
+        }
+    
+    @staticmethod
+    def iz_slovarja(slovar):
+        return Delo(
+            slovar["ime"],
+            slovar["opis"],
+            slovar["tezavnost"],
+            slovar["cena"],
+            slovar["material"],
+            date.fromisoformat(slovar["rok"]) if slovar["rok"] else None,
+            slovar["opravljeno"]
+        )
 
