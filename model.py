@@ -147,7 +147,7 @@ class Prostor:
     def stevilo_neopravljenih(self):
         stevilo = 0
         for delo in self.dela:
-            if not delo.opravljeno():
+            if not delo.opravljeno:
                 stevilo += 1
         return stevilo
     
