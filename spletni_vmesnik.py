@@ -9,6 +9,11 @@ except:
 
 @bottle.get("/")
 def osnovna_stran():
-    return bottle.template("osnovna_stran.tpl", neopravljena=moj_model.skupno_stevilo_neopravljenih(), zamujena=moj_model.skupno_stevilo_zamujenih())
+    return bottle.template(
+        "osnovna_stran.tpl",
+        neopravljena=moj_model.skupno_stevilo_neopravljenih(),
+        zamujena=moj_model.skupno_stevilo_zamujenih(),
+        dela=moj_model.aktualni_prostor.dela,
+        )
 
 bottle.run(reloder=True, debug=True)

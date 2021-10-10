@@ -147,7 +147,7 @@ class Prostor:
     def stevilo_neopravljenih(self):
         stevilo = 0
         for delo in self.dela:
-            if not delo.opravljeno:
+            if not delo.ali_opravljeno():
                 stevilo += 1
         return stevilo
     
@@ -157,7 +157,7 @@ class Prostor:
     def strosek_prostora(self):
         skupna_cena = 0
         for delo in self.dela:
-            skupna_cena += delo.cena
+            skupna_cena += int(delo.cena)
         return skupna_cena 
     
     def mnozica_materialov(self):
@@ -196,6 +196,11 @@ class Delo:
     def spremeni_opravljeno(self):
         self.opravljeno = not self.opravljeno
     
+    def ali_opravljeno(self):
+        if self.opravljeno:
+            return True
+        return False
+    
     def povecaj_ceno(self, k):
         self.cena += k
     
@@ -204,6 +209,8 @@ class Delo:
     
     def zamuja(self):
         danes = date.today()
+        if self.opravljeno:
+            return False
         if not self.rok:
             return False
         else:
