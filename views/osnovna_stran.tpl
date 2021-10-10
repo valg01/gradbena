@@ -2,6 +2,7 @@
     <body>
     <h1>Gradbena dela</h1>
         <h2>Urejenje in pregled nad delom na objektu</h2>
+                <p>{{neopravljena}}, {{zamujena}} </p>
             % if neopravljena > 0:
                 <p>{{neopravljena}} del je neopravljenih, od tega jih zamuja {zamujena}.</p>
             % elif neopravljena > 2 and zamujena == 0:
@@ -19,11 +20,5 @@
             % else:
                 <p>Super! Vsa dela so opravljena.</p>
             % end
-        <h3>Aktualna dela:</h3>
-            <ul>
-                % for delo in dela:
-                    <li>{{delo.ime}}</li>
-                % end
-            </ul>
     </body>
 </html>

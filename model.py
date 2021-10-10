@@ -43,9 +43,9 @@ class Hisa:
     
     def zmanjsaj_proracun(self, k):
         if not self.dodaj_proracun:
-            int(self.proracun) = -1 * int(k)
+            self.proracun = -1 * int(k)
         else:
-            int(self.proracun) -= int(k)
+            self.proracun = int(self.proracun) - k
 
 
     def stevilo_opravljenih(self):
@@ -73,10 +73,7 @@ class Hisa:
         return st
     
     def skupno_stevilo_neopravljenih(self):
-        st = 0
-        for prostor in self.prostori:
-            st += prostor.stevilo_neopravljenih()
-        return st
+        return sum([prostor.stevilo_neopravljenih() for prostor in self.prostori])
     
     def dodaj_delo(self, delo):
         self.aktualni_prostor.dodaj_delo(delo)
@@ -147,7 +144,7 @@ class Prostor:
     def stevilo_neopravljenih(self):
         stevilo = 0
         for delo in self.dela:
-            if not delo.ali_opravljeno():
+            if not delo.opravljeno:
                 stevilo += 1
         return stevilo
     
@@ -195,11 +192,6 @@ class Delo:
 
     def spremeni_opravljeno(self):
         self.opravljeno = not self.opravljeno
-    
-    def ali_opravljeno(self):
-        if self.opravljeno:
-            return True
-        return False
     
     def povecaj_ceno(self, k):
         self.cena += k
