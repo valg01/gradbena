@@ -67,7 +67,7 @@ def izberi_delo(model):
     return izberi_moznost(
         [
             (delo, prikaz_dela(delo))
-            for delo in model.aktualni_spisek.dela
+            for delo in model.aktualni_prostor.dela
         ]
     )
 
@@ -114,6 +114,7 @@ def tekstovni_vmesnik():
         elif ukaz == 10:
             moj_model.shrani_v_dat(IME_DATOTEKE)
             print("Nasvidenje! Uspešen dan ;)")
+            break
 
 def pozdrav():
     print("Dobrodošli v urejevalniku gradbenih del.")

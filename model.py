@@ -43,9 +43,9 @@ class Hisa:
     
     def zmanjsaj_proracun(self, k):
         if not self.dodaj_proracun:
-            self.proracun = -1 * k
+            int(self.proracun) = -1 * int(k)
         else:
-            self.proracun -= k
+            int(self.proracun) -= int(k)
 
 
     def stevilo_opravljenih(self):
