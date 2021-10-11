@@ -12,12 +12,12 @@
                 <p>{{neopravljena}} del je neopravljenih, vendat Vam nobeno ne zamuja.</p>
             %elif neopravljena == 4 or neopravljena == 3 and zamujena > 2:
                 <p>{{neopravljena}} dela so neopravljena, od tega jih zamuja {zamujena}</p>
-            %elif neopravljena == 4 or neopravljena == 3 and zamujena = 2:
-                <p>{{neopravljena}} del so neopravljena, od tega 2 deli zamujata.</p>
-            %elif neopravljena == 4 or neopravljena == 3 and zamujena = 1:
-                <p>{{neopravljena}} del so neopravljena, od tega 1 del0 zamuja.</p>
-            %elif neopravljena == 4 or neopravljena == 3 and zamujena = 0:
-                <p>{{neopravljena}} del so neopravljena, vendar nobeno ne zamuja.</p>
+            %elif neopravljena == 4 or neopravljena == 3 and zamujena == 2:
+                <p>{{neopravljena}} dela so neopravljena, od tega 2 deli zamujata.</p>
+            %elif neopravljena == 4 or neopravljena == 3 and zamujena == 1:
+                <p>{{neopravljena}} dela so neopravljena, od tega 1 del0 zamuja.</p>
+            %elif neopravljena == 4 or neopravljena == 3 and zamujena == 0:
+                <p>{{neopravljena}} dela so neopravljena, vendar nobeno ne zamuja.</p>
             % elif neopravljena == 2 and zamujena == 2:
                 <p>2 deli sta neopravljeni in zamujata.</p>
             % elif neopravljena == 2 and zamujena == 1:
@@ -31,5 +31,11 @@
             % else:
                 <p>Super! Vsa dela so opravljena.</p>
             % end
+            <h3>Aktualna dela:</h3>
+             <ul>
+                 % for delo in kretenizem:
+                     <li>{{delo.ime}}</li>
+                 % end
+             </ul>
     </body>
 </html>
