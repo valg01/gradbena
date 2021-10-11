@@ -73,6 +73,7 @@ class Hisa:
         return st
     
     def skupno_stevilo_neopravljenih(self):
+        print(sum([prostor.stevilo_neopravljenih() for prostor in self.prostori]))
         return sum([prostor.stevilo_neopravljenih() for prostor in self.prostori])
     
     def dodaj_delo(self, delo):
@@ -95,11 +96,11 @@ class Hisa:
 
     @staticmethod
     def iz_slovarja(slovar):
-        hisa = Hisa(slovar["ime"], slovar["proracun"])
+        hisa = Hisa(slovar["ime"], int(slovar["proracun"]))
         hisa.prostori = [
             Prostor.iz_slovarja(prostor) for prostor in slovar["prostori"]
         ]
-        if slovar["aktualni_prosor"] is not None:
+        if slovar["aktualni_prostor"] is not None:
             hisa.aktualni_prostor = hisa.prostori[slovar["aktualni_prostor"]]
         return hisa
     
@@ -181,7 +182,7 @@ class Prostor:
         return prostor
     
 class Delo:
-    def __init__(self, ime, opis, tezavnost, cena, material = None, rok = None, opravljeno = False):
+    def __init__(self, ime, opis, tezavnost, cena = 0, material = None, rok = None, opravljeno = False):
         self.ime = ime
         self.opis = opis
         self.material = material
@@ -227,7 +228,7 @@ class Delo:
             slovar["ime"],
             slovar["opis"],
             slovar["tezavnost"],
-            slovar["cena"],
+            int(slovar["cena"]),
             slovar["material"],
             date.fromisoformat(slovar["rok"]) if slovar["rok"] else None,
             slovar["opravljeno"]

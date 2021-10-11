@@ -2,11 +2,22 @@
     <body>
     <h1>Gradbena dela</h1>
         <h2>Urejenje in pregled nad delom na objektu</h2>
-                <p>{{neopravljena}}, {{zamujena}} </p>
-            % if neopravljena > 0:
-                <p>{{neopravljena}} del je neopravljenih, od tega jih zamuja {zamujena}.</p>
-            % elif neopravljena > 2 and zamujena == 0:
+            % if neopravljena > 4 and zamujena > 2:
+                <p>{{neopravljena}} del je neopravljenih, od tega jih zamuja {{zamujena}}.</p>
+            % elif neopravljena > 4 and zamujena == 2:
+                <p>{{neopravljena}} del je neopravljenih, od tega 2 deli zamujata.</p>
+            % elif neopravljena > 4 and zamujena == 1:
+                <p>{{neopravljena}} del je neopravljenih, od tega 1 delo zamuja.</p>
+            % elif neopravljena > 4 and zamujena == 0:
                 <p>{{neopravljena}} del je neopravljenih, vendat Vam nobeno ne zamuja.</p>
+            %elif neopravljena == 4 or neopravljena == 3 and zamujena > 2:
+                <p>{{neopravljena}} dela so neopravljena, od tega jih zamuja {zamujena}</p>
+            %elif neopravljena == 4 or neopravljena == 3 and zamujena = 2:
+                <p>{{neopravljena}} del so neopravljena, od tega 2 deli zamujata.</p>
+            %elif neopravljena == 4 or neopravljena == 3 and zamujena = 1:
+                <p>{{neopravljena}} del so neopravljena, od tega 1 del0 zamuja.</p>
+            %elif neopravljena == 4 or neopravljena == 3 and zamujena = 0:
+                <p>{{neopravljena}} del so neopravljena, vendar nobeno ne zamuja.</p>
             % elif neopravljena == 2 and zamujena == 2:
                 <p>2 deli sta neopravljeni in zamujata.</p>
             % elif neopravljena == 2 and zamujena == 1:

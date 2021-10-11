@@ -4,7 +4,7 @@ from model import Hisa, Prostor, Delo
 IME_DATOTEKE = "stanje.json"
 try:
     moj_model = Hisa.preberi_iz_dat(IME_DATOTEKE)
-except:
+except FileNotFoundError:
     moj_model = Hisa("")
 
 @bottle.get("/")
