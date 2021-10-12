@@ -43,9 +43,13 @@
                     </ul>
                 <li> <b>Neopravljena dela:</b>
                     <ul>
-                    % for delo in kretenizem:
+                    % for indeks, delo in enumerate(kretenizem):
                         % if not delo.opravljeno:
                             <li>{{delo.ime}}</li>
+                            <form action="/opravi/">
+                                <input type="hidden" name="indeks" value="{{indeks}}">
+                                <input type="submit" value="Opravi!">
+                            </form>
                         % end
                      % end
                     </ul>
@@ -57,7 +61,7 @@
                 cena : <input type="number" name="cena">
                 material : <input type="text" name="material">
                 rok : <input type="date" id="rok" name="rok">
-                <input type="submit" name="Oddaj!">
+                <input type="submit" value="Oddaj!">
             </form>
     </body>
 </html>

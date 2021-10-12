@@ -17,7 +17,7 @@ def osnovna_stran():
         )
 
 @bottle.get("/dodaj/")
-def dodaj_opravilo():
+def dodaj_delo():
     ime = bottle.request.query.getunicode("ime")
     opis = bottle.request.query.getunicode("opis")
     tezavnost = bottle.request.query.getunicode("tezavnost")
@@ -26,6 +26,15 @@ def dodaj_opravilo():
     rok = date.fromisoformat(bottle.request.query["rok"]) if bottle.request.query["rok"] else None
     delo = Delo(ime, opis, tezavnost, cena, material, rok)
     moj_model.dodaj_delo(delo)
+    moj_model.shrani_v_dat(IME_DATOTEKE)
+    bottle.redirect("/")
+
+@bottle.get("/opravi/")
+def opravi_delo():
+    indeks = bottle.request.query.getunicode("indeks")
+    delo = moj_model.aktualni_prostor.dela[int(indeks)]
+    delo.spremeni_opravljeno()
+    moj_model.shrani_v_dat(IME_DATOTEKE)
     bottle.redirect("/")
 
 @bottle.error(404)
