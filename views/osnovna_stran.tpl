@@ -11,7 +11,7 @@
             % elif neopravljena > 4 and zamujena == 0:
                 <p>{{neopravljena}} del je neopravljenih, vendat Vam nobeno ne zamuja.</p>
             %elif neopravljena == 4 or neopravljena == 3 and zamujena > 2:
-                <p>{{neopravljena}} dela so neopravljena, od tega jih zamuja {zamujena}</p>
+                <p>{{neopravljena}} dela so neopravljena, od tega jih zamuja {{zamujena}}</p>
             %elif neopravljena == 4 or neopravljena == 3 and zamujena == 2:
                 <p>{{neopravljena}} dela so neopravljena, od tega 2 deli zamujata.</p>
             %elif neopravljena == 4 or neopravljena == 3 and zamujena == 1:
@@ -33,9 +33,31 @@
             % end
             <h3>Aktualna dela:</h3>
              <ul>
-                 % for delo in kretenizem:
-                     <li>{{delo.ime}}</li>
-                 % end
+                <li> <b>Opravljena dela:</b>
+                    <ul>
+                    % for delo in kretenizem:
+                        % if delo.opravljeno:
+                            <li>{{delo.ime}}</li>
+                        % end
+                    % end
+                    </ul>
+                <li> <b>Neopravljena dela:</b>
+                    <ul>
+                    % for delo in kretenizem:
+                        % if not delo.opravljeno:
+                            <li>{{delo.ime}}</li>
+                        % end
+                     % end
+                    </ul>
              </ul>
+            <form action="/dodaj/">
+                ime : <input type="text" name="ime">
+                opis : <input type="text" name="opis">
+                tezavnost : <input type="text" name="tezavnost">
+                cena : <input type="number" name="cena">
+                material : <input type="text" name="material">
+                rok : <input type="date" id="rok" name="rok">
+                <input type="submit" name="Oddaj!">
+            </form>
     </body>
 </html>
