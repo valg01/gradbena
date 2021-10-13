@@ -16,22 +16,22 @@ def osnovna_stran():
         kretenizem=moj_model.aktualni_prostor.dela,
         )
 
-@bottle.get("/dodaj/")
+@bottle.post("/dodaj/")
 def dodaj_delo():
-    ime = bottle.request.query.getunicode("ime")
-    opis = bottle.request.query.getunicode("opis")
-    tezavnost = bottle.request.query.getunicode("tezavnost")
-    cena = bottle.request.query.getunicode("cena")
-    material = bottle.request.query.getunicode("material")
-    rok = date.fromisoformat(bottle.request.query["rok"]) if bottle.request.query["rok"] else None
+    ime = bottle.request.forms.getunicode("ime")
+    opis = bottle.request.forms.getunicode("opis")
+    tezavnost = bottle.request.forms.getunicode("tezavnost")
+    cena = bottle.request.forms.getunicode("cena")
+    material = bottle.request.forms.getunicode("material")
+    rok = date.fromisoformat(bottle.request.forms["rok"]) if bottle.request.forms["rok"] else None
     delo = Delo(ime, opis, tezavnost, cena, material, rok)
     moj_model.dodaj_delo(delo)
     moj_model.shrani_v_dat(IME_DATOTEKE)
     bottle.redirect("/")
 
-@bottle.get("/opravi/")
+@bottle.post("/opravi/")
 def opravi_delo():
-    indeks = bottle.request.query.getunicode("indeks")
+    indeks = bottle.request.forms.getunicode("indeks")
     delo = moj_model.aktualni_prostor.dela[int(indeks)]
     delo.spremeni_opravljeno()
     moj_model.shrani_v_dat(IME_DATOTEKE)

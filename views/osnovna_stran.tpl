@@ -46,7 +46,7 @@
                     % for indeks, delo in enumerate(kretenizem):
                         % if not delo.opravljeno:
                             <li>{{delo.ime}}</li>
-                            <form action="/opravi/">
+                            <form method="POST" action="/opravi/">
                                 <input type="hidden" name="indeks" value="{{indeks}}">
                                 <input type="submit" value="Opravi!">
                             </form>
@@ -54,7 +54,7 @@
                      % end
                     </ul>
              </ul>
-            <form action="/dodaj/">
+            <form method="POST" action="/dodaj/">
                 ime : <input type="text" name="ime">
                 opis : <input type="text" name="opis">
                 tezavnost : <input type="text" name="tezavnost">
