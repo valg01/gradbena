@@ -16,7 +16,7 @@
             %elif neopravljena == 4 or neopravljena == 3 and zamujena == 2:
                 <p>{{neopravljena}} dela so neopravljena, od tega 2 deli zamujata.</p>
             %elif neopravljena == 4 or neopravljena == 3 and zamujena == 1:
-                <p>{{neopravljena}} dela so neopravljena, od tega 1 del0 zamuja.</p>
+                <p>{{neopravljena}} dela so neopravljena, od tega 1 delo zamuja.</p>
             %elif neopravljena == 4 or neopravljena == 3 and zamujena == 0:
                 <p>{{neopravljena}} dela so neopravljena, vendar nobeno ne zamuja.</p>
             % elif neopravljena == 2 and zamujena == 2:
@@ -36,9 +36,13 @@
              <ul>
                 <li> <b>Opravljena dela:</b>
                     <ul>
-                    % for delo in kretenizem:
+                    % for indeks, delo in enumerate(kretenizem):
                         % if delo.opravljeno:
                             <li>{{delo.ime}}</li>
+                            <form method="POST" action="/opravi/">
+                                <input type="hidden" name="indeks" value="{{indeks}}">
+                                <input type="submit" value="Neopravi!">
+                            </form>
                         % end
                     % end
                     </ul>
@@ -63,6 +67,9 @@
                 material : <input type="text" name="material">
                 rok : <input type="date" id="rok" name="rok">
                 <input type="submit" value="Oddaj!">
+            </form>
+            <form action="/dodaj-prostor/">
+                <input type="submit" value="Nov prostor" />
             </form>
     </body>
 </html>
