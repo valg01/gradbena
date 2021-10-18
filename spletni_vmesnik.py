@@ -14,6 +14,7 @@ def osnovna_stran():
         neopravljena=moj_model.skupno_stevilo_neopravljenih(),
         zamujena=moj_model.skupno_stevilo_zamujenih(),
         kretenizem=moj_model.aktualni_prostor.dela,
+        aktualni=moj_model.aktualni_prostor
         )
 
 @bottle.get("/dodaj-prostor/")
@@ -49,6 +50,17 @@ def spremeni_opravljeno():
     delo = moj_model.aktualni_prostor.dela[int(indeks)]
     delo.spremeni_opravljeno()
     moj_model.shrani_v_dat(IME_DATOTEKE)
+    bottle.redirect("/")
+
+@bottle.get("/zamenjaj-aktualni-prostor/")
+def zamenjaj_aktualni_spisek_get():
+    bottle.template(
+        "zamenjaj_aktualni_spisek.html",
+        prostori = moj_model.prostori
+    )
+
+@bottle.post("/zamenjaj-aktualni-prostor/")
+def zamenjaj_aktualni_prostor_post():
     bottle.redirect("/")
 
 @bottle.error(404)
