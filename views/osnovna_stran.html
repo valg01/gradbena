@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    </head>
     <body>
     <h1>Gradbena dela</h1>
         <h2>Urejenje in pregled nad delom na objektu</h2>
@@ -32,7 +35,10 @@
             % else:
                 <p>Super! Vsa dela so opravljena.</p>
             % end
-            <h3>Aktualna dela:</h3>
+            <div class="control">
+                <a class="button is-link is-light is-outlined" href="/zamenjaj_aktualni_prostor/">Zamenjaj prostor!</a>
+            </div>
+            <h3>Aktualna dela v prostoru: {{aktualni.ime}}:</h3>
              <ul>
                 <li> <b>Opravljena dela:</b>
                     <ul>
@@ -60,16 +66,25 @@
                     </ul>
              </ul>
             <form method="POST" action="/dodaj/">
-                ime : <input type="text" name="ime">
-                opis : <input type="text" name="opis">
-                tezavnost : <input type="text" name="tezavnost">
-                cena : <input type="number" name="cena">
-                material : <input type="text" name="material">
-                rok : <input type="date" id="rok" name="rok">
-                <input type="submit" value="Oddaj!">
+                <div class="field">
+                    <div class="control has-icons-left has-icons-right">
+                        <label class="label">Dodaj novo delo</label>
+                        <input class="input" name="ime" type="text" placeholder="ime">
+                        <input class="input" name="opis" type="text" placeholder="opis">
+                        <input class="input" type="text" name="tezavnost" placeholder="težavnost">
+                        <input class="input" type="number" name="cena" placeholder="cena">
+                        <input class="input" type="text" name="material" placeholder="material">
+                        <input class="input" type="date" id="rok" name="rok" placeholder="date">
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-primary is-light">Dodaj</button>
+                        </div>
+                    </div>
+                </div>
             </form>
-            <form action="/dodaj-prostor/">
-                <input type="submit" value="Nov prostor" />
-            </form>
+            <div class="control">
+                <a class="button is-link is-light is-outlined" href="/dodaj-prostor/">Dodaj prostor!</a>
+            </div>
     </body>
 </html>

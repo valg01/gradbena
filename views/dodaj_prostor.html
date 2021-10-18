@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
     <body>
-        <h1>Dodaj nov prostor!</h1>
-        <p>Vpišite potrebne podatke:</p>
-        <form>
-            <form method="POST" action="/dodaj/">
-                ime : <input type="text" name="ime">
-                <input type="submit" value="Dodaj!">
-            </form>
+        <form method="POST">
+            <div class="field">
+                <label class="label">Dodaj nov prostor</label>
+                <div class="control has-icons-left has-icons-right">
+                    <h2>Napišite ime prostora</h2>
+                    <input class="input" name="ime" type="text" placeholder="ime">
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-primary is-light">Dodaj</button>
+                </div>
+                <div class="control">
+                    <a class="button is-default is-light" href="/">Prekliči</a>
+                </div>
+            </div>
         </form>
     </body>
 </html>
