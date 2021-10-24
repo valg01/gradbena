@@ -7,6 +7,9 @@
                     <input class="input" name="ime" type="text" placeholder="ime">
                 </div>
             </div>
+            % if "ime" in napake:
+                <p class="help is-danger">{{ napake["ime"] }}</p>
+            % end
             <div class="field is-grouped">
                 <div class="control">
                     <button class="button is-primary is-light">Dodaj</button>

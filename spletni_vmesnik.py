@@ -20,16 +20,32 @@ def osnovna_stran():
 @bottle.get("/dodaj-prostor/")
 def dodaj_prostor_get():
     return bottle.template(
-        "dodaj_prostor.html"
+        "dodaj_prostor.html",
+        napake={},
+        polja={}
     )
 
 @bottle.post("/dodaj-prostor/")
 def dodaj_prostor_post():
     ime = bottle.request.forms.getunicode("ime")
-    nov_prostor = Prostor(ime)
-    moj_model.dodaj_prostor(nov_prostor)
-    moj_model.shrani_v_dat(IME_DATOTEKE)
-    bottle.redirect("/")
+    napake = {}
+    polja = {"ime":ime}
+    if not ime:
+        napake["ime"] = "Ime mora biti neprazno."
+    for prostor in moj_model.prostori:
+        if prostor.ime == ime:
+            napake["ime"] = "To ime je že zasedeno"
+    if napake:
+        return bottle.template(
+            "dodaj_prostor.html",
+            napake = napake,
+            polja = polja
+        )
+    else:
+        nov_prostor = Prostor(ime)
+        moj_model.dodaj_prostor(nov_prostor)
+        moj_model.shrani_v_dat(IME_DATOTEKE)
+        bottle.redirect("/")
 
 @bottle.post("/dodaj/")
 def dodaj_delo():
@@ -53,14 +69,18 @@ def spremeni_opravljeno():
     bottle.redirect("/")
 
 @bottle.get("/zamenjaj-aktualni-prostor/")
-def zamenjaj_aktualni_spisek_get():
-    bottle.template(
-        "zamenjaj_aktualni_spisek.html",
-        prostori = moj_model.prostori
+def zamenjaj_aktualni_prostor_get():
+    return bottle.template(
+        "zamenjaj_aktualni_prostor.html",
+        prostori = moj_model.prostori,
+        aktualni_prostor = moj_model.aktualni_prostor
     )
 
 @bottle.post("/zamenjaj-aktualni-prostor/")
 def zamenjaj_aktualni_prostor_post():
+    indeks = bottle.request.forms.getunicode("indeks")
+    moj_model.aktualni_prostor = moj_model.prostori[int(indeks)]
+    moj_model.shrani_v_dat(IME_DATOTEKE)
     bottle.redirect("/")
 
 @bottle.error(404)
