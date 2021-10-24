@@ -1,4 +1,6 @@
 % rebase('base.html')
+<!-- Main container -->
+
         <h2>Urejenje in pregled nad delom na objektu</h2>
             % if neopravljena > 4 and zamujena > 2:
                 <p>{{neopravljena}} del je neopravljenih, od tega jih zamuja {{zamujena}}.</p>
@@ -32,7 +34,7 @@
             <div class="control">
                 <a class="button is-link is-light is-outlined" href="/zamenjaj-aktualni-prostor/">Zamenjaj prostor!</a>
             </div>
-            <h3>Aktualna dela v prostoru: {{aktualni.ime}}:</h3>
+            <h3>Aktualna dela v prostoru: {{aktualni.ime}}!</h3>
              <ul>
                 <li> <b>Opravljena dela:</b>
                     <ul>
