@@ -3,6 +3,11 @@
     % if napake:
         <p style="color:red">{{napake}}</p>
     % end
-    <input type="username" name="uporabnisko_ime">
-    <input type="submit" value="Prijava!">
+    <div class="control has-icons-left has-icons-right">
+        <input class="input" type="username" name="uporabnisko_ime" placeholder="uporabniško ime">
+            <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+            </span>
+    </div>
+    <button class="button is-primary is-rounded" type="submit">Prijava</button>
 </form>
