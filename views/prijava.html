@@ -1,0 +1,8 @@
+% rebase("base.html")
+<form method="POST">
+    % if napake:
+        <p style="color:red">{{napake}}</p>
+    % end
+    <input type="username" name="uporabnisko_ime">
+    <input type="submit" value="Prijava!">
+</form>

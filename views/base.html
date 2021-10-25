@@ -20,6 +20,22 @@
                   </span>
                 </div>
                 <div class="navbar-end">
+                  <div class="navbar-item">
+                    <div class="buttons">
+                      % if uporabnisko_ime:
+                        <form method="POST" action="/odjava/">
+                            <button class="is-info is-round is-light">Odjava</button>
+                        </form>
+                      % else:
+                        <a class="button is-primary" href="/registracija/">
+                          <strong>Registracija</strong>
+                        </a>
+                        <a class="button is-light" href="/prijava/">
+                          Prijava
+                        </a>
+                        % end
+                    </div>
+                  </div>
                   <a class="navbar-item"
                     href="https://github.com/valg01/gradbena">
                     <span class="icon">

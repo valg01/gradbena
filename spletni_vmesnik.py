@@ -1,29 +1,77 @@
 import bottle
+import os
 from model import Hisa, Prostor, Delo
 from datetime import date
-IME_DATOTEKE = "stanje.json"
-try:
-    moj_model = Hisa.preberi_iz_dat(IME_DATOTEKE)
-except FileNotFoundError:
-    moj_model = Hisa("")
+
+
+def nalozi_uporabnikovo_stanje():
+    uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
+    if uporabnisko_ime:
+        return Hisa.preberi_iz_dat(uporabnisko_ime)
+    else:
+        bottle.redirect("/prijava/")
+
+def shrani_uporabnika(hisa):
+    uporabnisko_ime = bottle.request.get_cookie("uporabnisko_ime")
+    hisa.shrani_v_dat(uporabnisko_ime)
+
 
 @bottle.get("/")
 def osnovna_stran():
+    moj_model = nalozi_uporabnikovo_stanje()
     return bottle.template(
         "osnovna_stran.html",
         prostori=moj_model.prostori,
         neopravljena=moj_model.skupno_stevilo_neopravljenih(),
         zamujena=moj_model.skupno_stevilo_zamujenih(),
-        kretenizem=moj_model.aktualni_prostor.dela,
-        aktualni=moj_model.aktualni_prostor
+        kretenizem=moj_model.aktualni_prostor.dela if moj_model.aktualni_prostor else [],
+        aktualni=moj_model.aktualni_prostor,
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
         )
+
+@bottle.get("/registracija/")
+def registracija_get():
+    return bottle.template("registracija.html", napake={}, polja={}, uporabnisko_ime=None )
+
+@bottle.post("/registracija/")
+def registracija_post():
+    uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
+    if os.path.exists(uporabnisko_ime):
+        napake = {"uporabnisko_ime": "Uporabniško ime že obstaja."}
+        return bottle.template("registracija.html", napake=napake, polja={"uporabnisko_ime": uporabnisko_ime}, uporabnisko_ime=None)
+    else:
+        bottle.response.set_cookie("uporabnisko_ime", uporabnisko_ime, path="/")
+        Hisa().shrani_v_dat(uporabnisko_ime)
+        bottle.redirect("/")
+
+@bottle.get("/prijava/")
+def prijava_get():
+    return bottle.template("prijava.html", napake={}, polja={}, uporabnisko_ime=None)
+
+@bottle.post("/prijava/")
+def prijava_post():
+    uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
+    if not os.path.exists(uporabnisko_ime):
+        napake = {"uporabnisko_ime": "Uporabniško ime ne obstaja."}
+        return bottle.template("prijava.html", napake=napake, polja={"uporabnisko_ime": uporabnisko_ime}, uporabnisko_ime=None)
+    else:
+        bottle.response.set_cookie("uporabnisko_ime", uporabnisko_ime, path="/")
+        bottle.redirect("/")
+
+@bottle.post("/odjava/")
+def odjava():
+    bottle.response.delete_cookie("uporabnisko_ime", path="/")
+    print("piškotek uspešno pobrisan")
+    bottle.redirect("/")
 
 @bottle.get("/dodaj-prostor/")
 def dodaj_prostor_get():
+    uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
     return bottle.template(
         "dodaj_prostor.html",
         napake={},
-        polja={}
+        polja={},
+        uporabnisko_ime=uporabnisko_ime
     )
 
 @bottle.post("/dodaj-prostor/")
@@ -31,6 +79,7 @@ def dodaj_prostor_post():
     ime = bottle.request.forms.getunicode("ime")
     napake = {}
     polja = {"ime":ime}
+    moj_model = nalozi_uporabnikovo_stanje()
     if not ime:
         napake["ime"] = "Ime mora biti neprazno."
     for prostor in moj_model.prostori:
@@ -45,15 +94,16 @@ def dodaj_prostor_post():
     else:
         nov_prostor = Prostor(ime)
         moj_model.dodaj_prostor(nov_prostor)
-        moj_model.shrani_v_dat(IME_DATOTEKE)
+        shrani_uporabnika(moj_model)
         bottle.redirect("/")
 
 @bottle.post("/odstrani-prostor/")
 def odstrani_prostor():
+    moj_model=nalozi_uporabnikovo_stanje()
     indeks = bottle.request.forms.getunicode("indeks1")
     prostor = moj_model.prostori[int(indeks)]
     moj_model.odstrani_prostor(prostor)
-    moj_model.shrani_v_dat(IME_DATOTEKE)
+    shrani_uporabnika(moj_model)
     bottle.redirect("/")
 
 @bottle.post("/dodaj/")
@@ -65,31 +115,26 @@ def dodaj_delo():
     material = bottle.request.forms.getunicode("material")
     rok = date.fromisoformat(bottle.request.forms["rok"]) if bottle.request.forms["rok"] else None
     delo = Delo(ime, opis, tezavnost, cena, material, rok)
+    moj_model=nalozi_uporabnikovo_stanje()
     moj_model.dodaj_delo(delo)
-    moj_model.shrani_v_dat(IME_DATOTEKE)
+    shrani_uporabnika(moj_model)
     bottle.redirect("/")
 
 @bottle.post("/opravi/")
 def spremeni_opravljeno():
     indeks = bottle.request.forms.getunicode("indeks")
+    moj_model=nalozi_uporabnikovo_stanje()
     delo = moj_model.aktualni_prostor.dela[int(indeks)]
     delo.spremeni_opravljeno()
-    moj_model.shrani_v_dat(IME_DATOTEKE)
+    shrani_uporabnika(moj_model)
     bottle.redirect("/")
-
-@bottle.get("/zamenjaj-aktualni-prostor/")
-def zamenjaj_aktualni_prostor_get():
-    return bottle.template(
-        "zamenjaj_aktualni_prostor.html",
-        prostori = moj_model.prostori,
-        aktualni_prostor = moj_model.aktualni_prostor
-    )
 
 @bottle.post("/zamenjaj-aktualni-prostor/")
 def zamenjaj_aktualni_prostor_post():
     indeks = bottle.request.forms.getunicode("indeks")
+    moj_model=nalozi_uporabnikovo_stanje()
     moj_model.aktualni_prostor = moj_model.prostori[int(indeks)]
-    moj_model.shrani_v_dat(IME_DATOTEKE)
+    shrani_uporabnika(moj_model)
     bottle.redirect("/")
 
 @bottle.error(404)

@@ -2,7 +2,7 @@ from datetime import date
 import json
 
 class Hisa:
-    def __init__(self, ime, proracun = None):
+    def __init__(self, ime=None, proracun = None):
         self.ime = ime
         self.proracun = proracun
         self.prostori = []
@@ -96,7 +96,8 @@ class Hisa:
 
     @staticmethod
     def iz_slovarja(slovar):
-        hisa = Hisa(slovar["ime"], int(slovar["proracun"]))
+        proracun = slovar["proracun"] if slovar["proracun"] else 0
+        hisa = Hisa(slovar["ime"], int(proracun))
         hisa.prostori = [
             Prostor.iz_slovarja(prostor) for prostor in slovar["prostori"]
         ]
