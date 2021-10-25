@@ -11,6 +11,7 @@ except FileNotFoundError:
 def osnovna_stran():
     return bottle.template(
         "osnovna_stran.html",
+        prostori=moj_model.prostori,
         neopravljena=moj_model.skupno_stevilo_neopravljenih(),
         zamujena=moj_model.skupno_stevilo_zamujenih(),
         kretenizem=moj_model.aktualni_prostor.dela,

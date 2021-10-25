@@ -1,5 +1,35 @@
 % rebase('base.html')
 <!-- Main container -->
+    <nav class=level>
+        <div class=level-left>
+            <form method="POST" action="/zamenjaj-aktualni-spisek/">
+                <div class="buttons has-addons field is-horiznotal">
+                    % for indeks, prostor in enumerate(prostori):
+                        % if prostor == aktualni:
+                            <button class="button is-primary" name="indeks" value="{{indeks}}">
+                                {{prostor.ime}}
+                            </button>
+                        % else:
+                        <button class="button" name="indeks" value="{{indeks}}">
+                            {{prostor.ime}}
+                        </button>   
+                        %end
+                        %end    
+                </div>
+            </form>
+        </div>
+        <div class="level-right">
+            <!-- <div class="level-item">
+                <p class="subtitle is-5">
+                    <strong>123</strong> posts
+                </p>
+            </div> -->
+                <div class="level-item">
+                    <a class="button is-info" href="/dodaj-prostor/">Dodaj prostor</a>
+                </div>
+            </form>
+        </div>
+    </nav>
 
         <h2>Urejenje in pregled nad delom na objektu</h2>
             % if neopravljena > 4 and zamujena > 2:
@@ -34,7 +64,6 @@
             <div class="control">
                 <a class="button is-link is-light is-outlined" href="/zamenjaj-aktualni-prostor/">Zamenjaj prostor!</a>
             </div>
-            <h3>Aktualna dela v prostoru: {{aktualni.ime}}!</h3>
              <ul>
                 <li> <b>Opravljena dela:</b>
                     <ul>
@@ -79,6 +108,3 @@
                     </div>
                 </div>
             </form>
-            <div class="control">
-                <a class="button is-link is-light is-outlined" href="/dodaj-prostor/">Dodaj prostor!</a>
-            </div>
