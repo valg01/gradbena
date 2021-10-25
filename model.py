@@ -2,7 +2,7 @@ from datetime import date
 import json
 
 class Hisa:
-    def __init__(self, ime=None, proracun = None):
+    def __init__(self, ime, proracun = None):
         self.ime = ime
         self.proracun = proracun
         self.prostori = []

@@ -36,12 +36,14 @@ def registracija_get():
 @bottle.post("/registracija/")
 def registracija_post():
     uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
+    ime_objekta = bottle.request.forms.getunicode("ime_objekta")
+    proracun = bottle.request.forms.getunicode("proracun")
     if os.path.exists(uporabnisko_ime):
         napake = {"uporabnisko_ime": "Uporabniško ime že obstaja."}
         return bottle.template("registracija.html", napake=napake, polja={"uporabnisko_ime": uporabnisko_ime}, uporabnisko_ime=None)
     else:
         bottle.response.set_cookie("uporabnisko_ime", uporabnisko_ime, path="/")
-        Hisa().shrani_v_dat(uporabnisko_ime)
+        Hisa(ime_objekta, proracun).shrani_v_dat(uporabnisko_ime)
         bottle.redirect("/")
 
 @bottle.get("/prijava/")
