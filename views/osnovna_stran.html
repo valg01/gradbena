@@ -2,16 +2,26 @@
 <!-- Main container -->
     <nav class=level>
         <div class=level-left>
-            <form method="POST" action="/zamenjaj-aktualni-spisek/">
+            <form method="POST" action="/zamenjaj-aktualni-prostor/">
                 <div class="buttons has-addons field is-horiznotal">
                     % for indeks, prostor in enumerate(prostori):
                         % if prostor == aktualni:
                             <button class="button is-primary" name="indeks" value="{{indeks}}">
                                 {{prostor.ime}}
+                                <span class="tag is-rounded">{{prostor.stevilo_zamujenih()}}</span>
                             </button>
                         % else:
-                        <button class="button" name="indeks" value="{{indeks}}">
+                        <button class="button is-primary is-light" name="indeks" value="{{indeks}}">
                             {{prostor.ime}}
+                            % if prostor.stevilo_zamujenih() != 0:
+                            <span class="tag is-rounded is-danger is-light">{{prostor.stevilo_zamujenih()}}</span>
+                            % else:
+                            <span class="tag is-rounded is-info is-light">{{prostor.stevilo_neopravljenih()}}</span>
+                            % end
+                            <form method="POST" action="/odstrani-prostor/">
+                                <button class="delete is-danger" name="indeks1" value="{{indeks}}"></button>
+                        
+                            </form>
                         </button>   
                         %end
                         %end    
@@ -19,11 +29,6 @@
             </form>
         </div>
         <div class="level-right">
-            <!-- <div class="level-item">
-                <p class="subtitle is-5">
-                    <strong>123</strong> posts
-                </p>
-            </div> -->
                 <div class="level-item">
                     <a class="button is-info" href="/dodaj-prostor/">Dodaj prostor</a>
                 </div>
@@ -61,9 +66,7 @@
             % else:
                 <p>Super! Vsa dela so opravljena.</p>
             % end
-            <div class="control">
-                <a class="button is-link is-light is-outlined" href="/zamenjaj-aktualni-prostor/">Zamenjaj prostor!</a>
-            </div>
+
              <ul>
                 <li> <b>Opravljena dela:</b>
                     <ul>

@@ -48,6 +48,14 @@ def dodaj_prostor_post():
         moj_model.shrani_v_dat(IME_DATOTEKE)
         bottle.redirect("/")
 
+@bottle.post("/odstrani-prostor/")
+def odstrani_prostor():
+    indeks = bottle.request.forms.getunicode("indeks1")
+    prostor = moj_model.prostori[int(indeks)]
+    moj_model.odstrani_prostor(prostor)
+    moj_model.shrani_v_dat(IME_DATOTEKE)
+    bottle.redirect("/")
+
 @bottle.post("/dodaj/")
 def dodaj_delo():
     ime = bottle.request.forms.getunicode("ime")

@@ -114,15 +114,6 @@ class Hisa:
         with open(dat, "r", encoding="utf-8") as f:
             slovar = json.load(f)
             return Hisa.iz_slovarja(slovar)
-        
-    def preveri_podatke_nove_hise(self, ime):
-        napake = {}
-        if not ime:
-            napake["ime"] = "Ime mora biti neprazno."
-        for prostor in self.prostori:
-            if prostor.ime == ime:
-                napake["ime"] = "Ime je že zasedeno"
-        return napake
 
 class Prostor:
     def __init__(self, ime):
