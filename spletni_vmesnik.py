@@ -15,12 +15,12 @@ def shrani_uporabnika(hisa):
     uporabnisko_ime = bottle.request.get_cookie("uporabnisko_ime")
     hisa.shrani_v_dat(uporabnisko_ime)
 
-
 @bottle.get("/")
 def osnovna_stran():
     moj_model = nalozi_uporabnikovo_stanje()
     return bottle.template(
         "osnovna_stran.html",
+        hisa=moj_model,
         prostori=moj_model.prostori,
         neopravljena=moj_model.skupno_stevilo_neopravljenih(),
         zamujena=moj_model.skupno_stevilo_zamujenih(),

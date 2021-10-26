@@ -4,7 +4,7 @@
     <nav class=level>
         <div class=level-left>
             <form method="POST" action="/zamenjaj-aktualni-prostor/">
-                <div class="buttons has-addons field is-horiznotal">
+                <div class="buttons has-addons field is-horizontal">
                     % for indeks, prostor in enumerate(prostori):
                         % if prostor == aktualni:
                             <button class="button is-primary" name="indeks" value="{{indeks}}">
@@ -28,9 +28,11 @@
                 </div>
             </form>
         </div>
+        <progress class="progress level is-success is-small is-horizontal" value="{{hisa.delez_opravljenih()}}" max="1">{{hisa.delez_opravljenih()}}</progress>
+        <p class="level">{{hisa.delez_opravljenih()}}</p>
         <div class="level-right">
                 <div class="level-item">
-                    <a class="button is-info" href="/dodaj-prostor/">Dodaj prostor</a>
+                    <a class="button is-info is-rounded" href="/dodaj-prostor/">Dodaj prostor</a>
                 </div>
         </div>
     </nav>
@@ -120,7 +122,7 @@
                             </div>
                         </td>
                             <div class="field is-grouped">
-                                <div class="control">
+                                <div class="control is-hovered">
                                     <button class="button is-primary is-light is-small">Dodaj</button>
                                 </div>
                             </div>
@@ -149,7 +151,7 @@
                             % if delo.tezavnost == "lahko":
                             <p style="color:green">{{delo.ime}}</p>
                             % elif delo.tezavnost == "srednje":
-                            <p style="color:yellow">{{delo.ime}}</p>
+                            <p style="color:rgb(39, 18, 114)">{{delo.ime}}</p>
                             % elif delo.tezavnost == "težko":
                             <p style="color:red">{{delo.ime}}</p>
                             % else:

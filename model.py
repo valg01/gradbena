@@ -47,7 +47,6 @@ class Hisa:
         else:
             self.proracun = int(self.proracun) - k
 
-
     def stevilo_opravljenih(self):
         opravljeni = 0
         for prostor in self.prostori:
@@ -55,12 +54,14 @@ class Hisa:
                 if delo.opravljeno:
                     opravljeni += 1
         return opravljeni
-
+    
     def delez_opravljenih(self):
         opravljeni = self.stevilo_opravljenih()
         vsa_dela = 0
         for prostor in self.prostori:
             vsa_dela += prostor.stevilo_del()
+        if vsa_dela == 0:
+            return 0
         return round(opravljeni / vsa_dela, 2)
     
     def delez_neopravljenih(self):
@@ -85,7 +86,7 @@ class Hisa:
         self.aktualni_prostor.odstrani_delo(delo)
         nov_proracun = int(self.proracun) + int(delo.cena)
         self.proracun = nov_proracun
-    
+        
     def v_slovar(self):
         return {
         "ime" : self.ime,
@@ -93,6 +94,7 @@ class Hisa:
         "prostori": [prostor.v_slovar() for prostor in self.prostori],
         "aktualni_prostor": self.prostori.index(self.aktualni_prostor) if self.aktualni_prostor else None,
         }
+    
 
     @staticmethod
     def iz_slovarja(slovar):
