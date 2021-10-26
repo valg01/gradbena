@@ -1,5 +1,6 @@
 % rebase('base.html')
 <!-- Main container -->
+    % if aktualni:
     <nav class=level>
         <div class=level-left>
             <form method="POST" action="/zamenjaj-aktualni-prostor/">
@@ -20,7 +21,6 @@
                             % end
                             <form method="POST" action="/odstrani-prostor/">
                                 <button class="delete is-danger" name="indeks1" value="{{indeks}}"></button>
-                        
                             </form>
                         </button>   
                         %end
@@ -32,7 +32,6 @@
                 <div class="level-item">
                     <a class="button is-info" href="/dodaj-prostor/">Dodaj prostor</a>
                 </div>
-            </form>
         </div>
     </nav>
 
@@ -66,48 +65,113 @@
             % else:
                 <p>Super! Vsa dela so opravljena.</p>
             % end
-
-             <ul>
-                <li> <b>Opravljena dela:</b>
-                    <ul>
-                    % for indeks, delo in enumerate(kretenizem):
-                        % if delo.opravljeno:
-                            <li>{{delo.ime}}</li>
-                            <form method="POST" action="/opravi/">
-                                <input type="hidden" name="indeks" value="{{indeks}}">
-                                <input type="submit" value="Neopravi!">
-                            </form>
-                        % end
-                    % end
-                    </ul>
-                <li> <b>Neopravljena dela:</b>
-                    <ul>
-                    % for indeks, delo in enumerate(kretenizem):
-                        % if not delo.opravljeno:
-                            <li>{{delo.ime}}</li>
-                            <form method="POST" action="/opravi/">
-                                <input type="hidden" name="indeks" value="{{indeks}}">
-                                <input type="submit" value="Opravi!">
-                            </form>
-                        % end
-                     % end
-                    </ul>
-             </ul>
-            <form method="POST" action="/dodaj/">
-                <div class="field">
-                    <div class="control has-icons-left has-icons-right">
+        <table class="table is-hoverable is-fullwidth">
+            <thead>
+                <td>
+                    <form method="POST" action="/dodaj/">
+                        <td></td>
                         <label class="label">Dodaj novo delo</label>
-                        <input class="input" name="ime" type="text" placeholder="ime">
-                        <input class="input" name="opis" type="text" placeholder="opis">
-                        <input class="input" type="text" name="tezavnost" placeholder="težavnost">
-                        <input class="input" type="number" name="cena" placeholder="cena">
-                        <input class="input" type="text" name="material" placeholder="material">
-                        <input class="input" type="date" id="rok" name="rok" placeholder="date">
-                    </div>
-                    <div class="field is-grouped">
-                        <div class="control">
-                            <button class="button is-primary is-light">Dodaj</button>
+                        <td>
+                            <div class="control has-icons-left">
+                                <input class="input is-small" name="ime" type="text" placeholder="ime">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-clipboard-check"></i>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control has-icons-left">
+                                <input class="input is-small" name="opis" type="text" placeholder="opis">
+                                <span class="icon is-small is-left">
+                                    <i class="far fa-sticky-note"></i>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control has-icons-left">
+                                <input class="input is-small" type="text" name="tezavnost" placeholder="težavnost">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-dumbbell"></i>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control has-icons-left">
+                                <input class="input is-small" type="number" name="cena" placeholder="cena">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-money-bill"></i>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control has-icons-left">
+                                <input class="input is-small" type="text" name="material" placeholder="material">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-hammer"></i>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control has-icons-left">
+                                <input class="input is-small" type="date" id="rok" name="rok" placeholder="date">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </td>
+                            <div class="field is-grouped">
+                                <div class="control">
+                                    <button class="button is-primary is-light is-small">Dodaj</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </form>
+                    </form>
+                </td>
+            </thead>
+            <tbody>
+                % for indeks, delo in enumerate(kretenizem):
+                    <tr>
+                        <td>
+                            <form method="POST" action="/opravi/">
+                                <input type="hidden" name="indeks" value="{{indeks}}">
+                                <button class="button is-white">
+                                    <span class="icon is-small">
+                                        % if delo.opravljeno:
+                                            <i class="far fa-check-square"></i>
+                                        % else:
+                                            <i class="far fa-square"></i>
+                                        % end
+                                    </span>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            % if delo.tezavnost == "lahko":
+                            <p style="color:green">{{delo.ime}}</p>
+                            % elif delo.tezavnost == "srednje":
+                            <p style="color:yellow">{{delo.ime}}</p>
+                            % elif delo.tezavnost == "težko":
+                            <p style="color:red">{{delo.ime}}</p>
+                            % else:
+                            <p>{{delo.ime}}</p>
+                            % end
+                        </td>
+                        <td>{{delo.opis}}</td>
+                        <td>
+                            % if delo.rok:
+                            {{delo.rok}}
+                            %end
+                        </td>
+                    </tr>
+                % end
+            </tbody>
+        </table>
+    % else:
+        Pozdravljeni v organizatorju gradbenih del. Nimate še nobenega prostora, zato ga najprej dodajte. 
+        <div class="level-right">
+            <div class="level-item">
+                <a class="button is-info" href="/dodaj-prostor/">Dodaj prostor</a>
+            </div>
+        </div>
+    
+    % end

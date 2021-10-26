@@ -8,6 +8,18 @@
           <span class="icon is-small is-left">
             <i class="fas fa-user"></i>
           </span>
+        <label class="label">Ime objekta</label>
+        <div class="control has-icons-left has-icons-right">
+            <input class="input" name="ime_objekta" type="text" placeholder="ime objekta" value="{{polja.get('ime_objekta', '')}}">
+        <span class="icon is-small is-left">
+            <i class="fas fa-house"></i>
+        </span>
+        <label class="label">Začetni proračun</label>
+        <div class="control has-icons-left has-icons-right">
+            <input class="input" name="proračun" type="number" placeholder="začetni proračun" value="{{polja.get('ime_objekta', '')}}">
+        <span class="icon is-small is-left">
+            <i class="fas fa-money-bill"></i>
+        </span>
         </div>
         % if "uporabnisko_ime" in napake:
             <p class="help is-danger">{{ napake["uporabnisko_ime"] }}</p>
