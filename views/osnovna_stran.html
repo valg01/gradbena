@@ -1,6 +1,14 @@
 % rebase('base.html')
 <!-- Main container -->
     % if aktualni:
+
+    <progress class="progress level is-large is-success" value="{{hisa.delez_opravljenih()}}" max="1">{{hisa.delez_opravljenih()}}</progress>
+        <p style="text-align: center">{{hisa.delez_opravljenih() * 100}}%</p>
+
+    <p style="text-align: center">Vaš začetni proračun je {{hisa.zacetni_proracun()}} €</p>
+    <p style="text-align: center">Porabili boste {{hisa.stroski()}} €</p>
+    <p style="text-align: center">Ostalo vam bo {{hisa.proracun}} €</p>
+    
     <nav class=level>
         <div class=level-left>
             <form method="POST" action="/zamenjaj-aktualni-prostor/">
@@ -9,6 +17,7 @@
                         % if prostor == aktualni:
                             <button class="button is-primary" name="indeks" value="{{indeks}}">
                                 {{prostor.ime}}
+                                {{indeks}}
                                 <span class="tag is-rounded">{{prostor.stevilo_zamujenih()}}</span>
                             </button>
                         % else:
@@ -28,8 +37,6 @@
                 </div>
             </form>
         </div>
-        <progress class="progress level is-success is-small is-horizontal" value="{{hisa.delez_opravljenih()}}" max="1">{{hisa.delez_opravljenih()}}</progress>
-        <p class="level">{{hisa.delez_opravljenih()}}</p>
         <div class="level-right">
                 <div class="level-item">
                     <a class="button is-info is-rounded" href="/dodaj-prostor/">Dodaj prostor</a>
@@ -121,16 +128,19 @@
                                 </span>
                             </div>
                         </td>
+                        <td>
                             <div class="field is-grouped">
                                 <div class="control is-hovered">
-                                    <button class="button is-primary is-light is-small">Dodaj</button>
+                                    <button class="button is-primary is-light is-small is-rounded">Dodaj</button>
                                 </div>
                             </div>
+                        </td>
                         </div>
                     </form>
                 </td>
             </thead>
             <tbody>
+                <td><p>Gradbena dela v prostoru</p></td>
                 % for indeks, delo in enumerate(kretenizem):
                     <tr>
                         <td>
