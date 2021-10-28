@@ -4,7 +4,7 @@
                 <label class="label">Dodaj nov prostor</label>
                 <div class="control has-icons-left has-icons-right">
                     <h2>Napišite ime prostora</h2>
-                    <input class="input" name="ime" type="text" placeholder="ime">
+                    <input class="input" name="ime" type="text" placeholder="ime prostora" value="{{polja.get('ime', '')}}">
                 </div>
             </div>
             % if "ime" in napake:
