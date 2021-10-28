@@ -7,7 +7,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
         <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     </head>
-
+    % import bottle
+    % uporabnisko_ime=uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
     <body class="has-background-white-ter">
             <nav class="navbar is-success">
               <div class="container">
@@ -33,7 +34,7 @@
                         <a class="button is-light is-rounded" href="/prijava/">
                           Prijava
                         </a>
-                        % end
+                      % end
                     </div>
                   </div>
                   <a class="navbar-item"
