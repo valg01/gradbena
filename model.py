@@ -29,11 +29,8 @@ class Hisa:
                 strosek += delo.cena
         return strosek
     
-    def ostanek_denarja(self):
-        if not self.proracun:
-            return -1 * self.stroski
-        else:
-            return self.proracun - self.stroski()
+    def zacetni_proracun(self):
+        return self.proracun + self.stroski()
     
     def dodaj_proracun(self, k):
         if not self.proracun:

@@ -8,6 +8,34 @@
     <p style="text-align: center">Vaš začetni proračun je {{hisa.zacetni_proracun()}} €</p>
     <p style="text-align: center">Porabili boste {{hisa.stroski()}} €</p>
     <p style="text-align: center">Ostalo vam bo {{hisa.proracun}} €</p>
+
+
+    <table class="table is-hoverable" style="margin-left:auto; margin-right:auto">
+        <thead>
+            <td><label class="label">Spremeni proračun</label>
+            <form method="POST" action="/spremeni-proracun/">
+                <td></td>
+                <td>
+                    <div class="control has-icons-left">
+                        <input class="input is-small" name="sprememba_proracuna" type="number" placeholder="vnesi spremembo">
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-money-bill"></i>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="field is-grouped">
+                        <div class="control is-hovered">
+                            <button class="button is-primary is-light is-small is-rounded">Spremeni</button>
+                        </div>
+                    </div>
+                </td>
+                </div>
+            </form>
+            </td>
+        </thead>
+    </table>
+
     
     <nav class=level>
         <div class=level-left>
@@ -44,42 +72,41 @@
         </div>
     </nav>
 
-        <h2>Urejenje in pregled nad delom na objektu</h2>
+        <p style="text-align: center; font-weight: bold;">Urejenje in pregled nad delom na objektu</p>
             % if neopravljena > 4 and zamujena > 2:
-                <p>{{neopravljena}} del je neopravljenih, od tega jih zamuja {{zamujena}}.</p>
+                <p style="text-align: center">{{neopravljena}} del je neopravljenih, od tega jih zamuja {{zamujena}}.</p>
             % elif neopravljena > 4 and zamujena == 2:
-                <p>{{neopravljena}} del je neopravljenih, od tega 2 deli zamujata.</p>
+                <p style="text-align: center">{{neopravljena}} del je neopravljenih, od tega 2 deli zamujata.</p>
             % elif neopravljena > 4 and zamujena == 1:
-                <p>{{neopravljena}} del je neopravljenih, od tega 1 delo zamuja.</p>
+                <p style="text-align: center">{{neopravljena}} del je neopravljenih, od tega 1 delo zamuja.</p>
             % elif neopravljena > 4 and zamujena == 0:
-                <p>{{neopravljena}} del je neopravljenih, vendat Vam nobeno ne zamuja.</p>
+                <p style="text-align: center">{{neopravljena}} del je neopravljenih, vendat Vam nobeno ne zamuja.</p>
             %elif neopravljena == 4 or neopravljena == 3 and zamujena > 2:
-                <p>{{neopravljena}} dela so neopravljena, od tega jih zamuja {{zamujena}}</p>
+                <p style="text-align: center">{{neopravljena}} dela so neopravljena, od tega jih zamuja {{zamujena}}</p>
             %elif neopravljena == 4 or neopravljena == 3 and zamujena == 2:
-                <p>{{neopravljena}} dela so neopravljena, od tega 2 deli zamujata.</p>
+                <p style="text-align: center">{{neopravljena}} dela so neopravljena, od tega 2 deli zamujata.</p>
             %elif neopravljena == 4 or neopravljena == 3 and zamujena == 1:
-                <p>{{neopravljena}} dela so neopravljena, od tega 1 delo zamuja.</p>
+                <p style="text-align: center">{{neopravljena}} dela so neopravljena, od tega 1 delo zamuja.</p>
             %elif neopravljena == 4 or neopravljena == 3 and zamujena == 0:
-                <p>{{neopravljena}} dela so neopravljena, vendar nobeno ne zamuja.</p>
+                <p style="text-align: center">{{neopravljena}} dela so neopravljena, vendar nobeno ne zamuja.</p>
             % elif neopravljena == 2 and zamujena == 2:
-                <p>2 deli sta neopravljeni in zamujata.</p>
+                <p style="text-align: center">2 deli sta neopravljeni in zamujata.</p>
             % elif neopravljena == 2 and zamujena == 1:
-                <p>2 deli sta neopravljeni, 1 delo že zamuja.</p>
+                <p style="text-align: center">2 deli sta neopravljeni, 1 delo že zamuja.</p>
             % elif neopravljena == 2 and zamujena == 0:
-                <p>2 deli sta neopravljeni.</p>
+                <p style="text-align: center">2 deli sta neopravljeni.</p>
             % elif neopravljena == 1 and zamujena == 1:
-                <p>1 delo je neopravljeno in zamuja.</p>
+                <p style="text-align: center">1 delo je neopravljeno in zamuja.</p>
             % elif neopravljena == 1 and zamujena == 0:
-                <p>1 delo je neopravljeno.</p>
+                <p style="text-align: center">1 delo je neopravljeno.</p>
             % else:
-                <p>Super! Vsa dela so opravljena.</p>
+                <p style="text-align: center">Super! Vsa dela so opravljena.</p>
             % end
         <table class="table is-hoverable is-fullwidth">
             <thead>
-                <td>
+                <td><label class="label">Dodaj novo delo</label>
                     <form method="POST" action="/dodaj/">
                         <td></td>
-                        <label class="label">Dodaj novo delo</label>
                         <td>
                             <div class="control has-icons-left">
                                 <input class="input is-small" name="ime" type="text" placeholder="ime">
@@ -170,8 +197,10 @@
                         </td>
                         <td>{{delo.opis}}</td>
                         <td>
-                            % if delo.rok:
-                            {{delo.rok}}
+                            % if delo.rok and delo.zamuja():
+                                <p style="color: red;">{{delo.rok}}</p>
+                            % elif delo.rok and not delo.zamuja():
+                                <p>{{delo.rok}}</p>
                             %end
                         </td>
                     </tr>

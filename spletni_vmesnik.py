@@ -26,7 +26,7 @@ def osnovna_stran():
         zamujena=moj_model.skupno_stevilo_zamujenih(),
         kretenizem=moj_model.aktualni_prostor.dela if moj_model.aktualni_prostor else [],
         aktualni=moj_model.aktualni_prostor,
-        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
         )
 
 @bottle.get("/registracija/")
@@ -69,11 +69,13 @@ def odjava():
 @bottle.get("/dodaj-prostor/")
 def dodaj_prostor_get():
     uporabnisko_ime = bottle.request.forms.getunicode("uporabnisko_ime")
+    moj_model=nalozi_uporabnikovo_stanje()
     return bottle.template(
         "dodaj_prostor.html",
         napake={},
         polja={},
-        uporabnisko_ime=uporabnisko_ime
+        uporabnisko_ime=uporabnisko_ime,
+        hisa=moj_model,
     )
 
 @bottle.post("/dodaj-prostor/")
@@ -102,8 +104,8 @@ def dodaj_prostor_post():
 @bottle.post("/odstrani-prostor/")
 def odstrani_prostor():
     moj_model=nalozi_uporabnikovo_stanje()
-    indeks = bottle.request.forms.getunicode("indeks1")
-    prostor = moj_model.prostori[int(indeks)]
+    indeks = bottle.request.forms.getunicode("indeks1") 
+    prostor = moj_model.prostori[int(indeks)] if indeks else moj_model.prostori[0]
     moj_model.odstrani_prostor(prostor)
     shrani_uporabnika(moj_model)
     bottle.redirect("/")
@@ -136,6 +138,14 @@ def zamenjaj_aktualni_prostor_post():
     indeks = bottle.request.forms.getunicode("indeks")
     moj_model=nalozi_uporabnikovo_stanje()
     moj_model.aktualni_prostor = moj_model.prostori[int(indeks)]
+    shrani_uporabnika(moj_model)
+    bottle.redirect("/")
+
+@bottle.post("/spremeni-proracun/")
+def dodaj_proracun():
+    sprememba = bottle.request.forms.getunicode("sprememba_proracuna")
+    moj_model=nalozi_uporabnikovo_stanje()
+    moj_model.dodaj_proracun(int(sprememba))
     shrani_uporabnika(moj_model)
     bottle.redirect("/")
 
