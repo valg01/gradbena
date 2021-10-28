@@ -7,7 +7,11 @@
 
     <p style="text-align: center">Vaš začetni proračun je {{hisa.zacetni_proracun()}} €</p>
     <p style="text-align: center">Porabili boste {{hisa.stroski()}} €</p>
-    <p style="text-align: center">Ostalo vam bo {{hisa.proracun}} €</p>
+    % if hisa.proracun >= 0:
+        <p style="text-align: center">Ostalo vam bo {{hisa.proracun}} €</p>
+    %else:
+        <p style="text-align: center; color: tomato;">Ostalo vam bo {{hisa.proracun}}€</p>
+    %end
 
 
     <table class="table is-hoverable" style="margin-left:auto; margin-right:auto">
@@ -67,7 +71,7 @@
         </div>
         <div class="level-right">
                 <div class="level-item">
-                    <a class="button is-info is-rounded" href="/dodaj-prostor/">Dodaj prostor</a>
+                    <a class="button is-primary is-rounded" href="/dodaj-prostor/">Dodaj prostor</a>
                 </div>
         </div>
     </nav>
@@ -167,7 +171,15 @@
                 </td>
             </thead>
             <tbody>
-                <td><p>Gradbena dela v prostoru</p></td>
+                <tr>
+                    <th>Gradbena dela v prostoru</th>
+                    <th>Ime</th>
+                    <th>Opis</th>
+                    <th>Rok</th>
+                    <th>Cena</th>
+                    <th>Material</th>
+                </tr>
+                
                 % for indeks, delo in enumerate(kretenizem):
                     <tr>
                         <td>
@@ -186,23 +198,27 @@
                         </td>
                         <td>
                             % if delo.tezavnost == "lahko":
-                            <p style="color:green">{{delo.ime}}</p>
+                            <p style="color:green; text-align: center;">{{delo.ime}}</p>
                             % elif delo.tezavnost == "srednje":
-                            <p style="color:rgb(39, 18, 114)">{{delo.ime}}</p>
+                            <p style="color:rgb(39, 18, 114); text-align: center;">{{delo.ime}}</p>
                             % elif delo.tezavnost == "težko":
-                            <p style="color:red">{{delo.ime}}</p>
+                            <p style="color:tomato; text-align: center;">{{delo.ime}}</p>
                             % else:
-                            <p>{{delo.ime}}</p>
+                            <p style="text-align: center;">{{delo.ime}}</p>
                             % end
                         </td>
-                        <td>{{delo.opis}}</td>
+                        <td>
+                            <p style="text-align: center;">{{delo.opis}}</p>
+                        </td>
                         <td>
                             % if delo.rok and delo.zamuja():
-                                <p style="color: red;">{{delo.rok}}</p>
+                                <p style="color: tomato; text-align: center;">{{delo.rok}}</p>
                             % elif delo.rok and not delo.zamuja():
-                                <p>{{delo.rok}}</p>
+                                <p style="text-align: center;">{{delo.rok}}</p>
                             %end
                         </td>
+                        <td style="text-align: center;">{{delo.cena}}</td>
+                        <td style="text-align: center;">{{delo.material}}</td>
                     </tr>
                 % end
             </tbody>
@@ -211,7 +227,7 @@
         Pozdravljeni v organizatorju gradbenih del. Nimate še nobenega prostora, zato ga najprej dodajte. 
         <div class="level-right">
             <div class="level-item">
-                <a class="button is-info" href="/dodaj-prostor/">Dodaj prostor</a>
+                <a class="button is-primary is-rounded" href="/dodaj-prostor/">Dodaj prostor</a>
             </div>
         </div>
     
