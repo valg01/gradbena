@@ -105,7 +105,8 @@
                 <p style="text-align: center">1 delo je neopravljeno.</p>
             % else:
                 <p style="text-align: center">Super! Vsa dela so opravljena.</p>
-            % end
+            % end 
+
         <table class="table is-hoverable is-fullwidth">
             <thead>
                 <td><label class="label">Dodaj novo delo</label>
@@ -219,6 +220,11 @@
                         </td>
                         <td style="text-align: center;">{{delo.cena}}</td>
                         <td style="text-align: center;">{{delo.material}}</td>
+                        <td> 
+                            <form method="POST" action="/odstrani/">
+                                <button class="button is-danger is-rounded is-light is-small" name="indeks" value="{{indeks}}">Odstrani</button>
+                            </form>
+                        </td>
                     </tr>
                 % end
             </tbody>

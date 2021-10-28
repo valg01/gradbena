@@ -124,6 +124,15 @@ def dodaj_delo():
     shrani_uporabnika(moj_model)
     bottle.redirect("/")
 
+@bottle.post("/odstrani/")
+def odstrani_delo():
+    indeks = bottle.request.forms.getunicode("indeks")
+    moj_model = nalozi_uporabnikovo_stanje()
+    delo = moj_model.aktualni_prostor.dela[int(indeks)]
+    moj_model.odstrani_delo(delo)
+    shrani_uporabnika(moj_model)
+    bottle.redirect("/")
+
 @bottle.post("/opravi/")
 def spremeni_opravljeno():
     indeks = bottle.request.forms.getunicode("indeks")
