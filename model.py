@@ -51,6 +51,7 @@ class Hisa:
             for delo in prostor.dela:
                 if delo.material:
                     sez.append(delo.material)
+        return sez
 
     def dodaj_material(self, material):
         self.shramba.append(material)
