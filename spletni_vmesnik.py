@@ -174,6 +174,15 @@ def dodaj_material():
     shrani_uporabnika(moj_model)
     bottle.redirect("/shramba/")
 
+@bottle.post("/izbrisi_material/")
+def izbrisi_material():
+    indeks = bottle.request.forms.getunicode("indeks")
+    moj_model=nalozi_uporabnikovo_stanje()
+    material = moj_model.shramba[int(indeks)]
+    moj_model.shramba.remove(material)
+    shrani_uporabnika(moj_model)
+    bottle.redirect("/shramba/")
+
 @bottle.error(404)
 def error_404(error):
     return "Ta stran žal ne obstaja!"
