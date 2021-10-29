@@ -1,27 +1,77 @@
 % rebase('base.html')
-    {{potreba}}
-    % if potreba:
-        <p>Za delo na objektu potrebujete:</p>
-        % for material in potreba:
-        <ul>
-            <li>{{material}}</li>
-        </ul>
-        %end
-    % else:
-        <p>Trenutno za dokončanje del ne potrebujete nobenega materiala.</p>
-    % end
 
-    % if shramba:
-        <p>V shrambi imate:</p>
-        % for material in shramba:
-            <ul>
-                <li>{{material}}</li>
-            </ul>
-        % end
-    % else:
-        <p>Trenutno imate prazno shrambo.</p>
-        <form method="POST" action="/dodaj-material/">
-            <input class="input is-small" type="text" name="material" placeholder="material">
-            <button class="button is-small is-rounded is-primary is-light" type="submit">Dodaj</button>
-        </form>
-    % end
+    <table class="table is-hoverable" style="margin-left: auto; margin-right: auto;">
+        <thead>
+            <td>
+                <label class="label" style="margin-top: auto; margin-bottom: auto;">Dodaj material</label>
+                <form method="POST" action="/dodaj-material/">
+                    <td></td>
+                    <td>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" name="material" placeholder="material">
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-warehouse"></i>
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="field is-grouped">
+                            <div class="control is-hovered">
+                                <button class="button is-primary is-light is-rounded">Dodaj</button>
+                            </div>
+                        </div>
+                    </td>
+                </form>
+            </td>
+        </thead>
+        <tbody>
+            % if potreba:
+                % for material in potreba:
+                    % if material not in shramba:
+                    <tr>
+                        <td>
+                            <div class="icon-text">
+                            <span class="icon is-small is-left has-text-info">
+                                <i class="fa fa-asterisk"></i>
+                            </span>
+                            <span><p style="font-weight: bold;">{{material}}</p></span>
+                            </div>
+                        </td>
+                        <td>
+                            Potrebno kupiti
+                        </td>
+                    </tr>
+                    % end
+                %end
+            % end
+            % if shramba:
+                % for indeks, material in enumerate(shramba):
+                <tr>
+                    <td>
+                        <div class="icon-text">
+                            <span class="icon is-small is-left has-text-info">
+                                <i class="fa fa-asterisk"></i>
+                            </span>
+                            <span>{{material}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        Na zalogi
+                    </td>
+                    <td>
+                        <form method="POST" action="/izbrisi_material/">
+                            <button class="button is-danger is-rounded is-light is-small" name="indeks" value="{{indeks}}">Odstrani</button>
+                        </form>
+                    </td>
+                </tr>
+                % end
+            % else:
+                <td>Trenutno imate prazno shrambo. Potrebno bo v trgovino.</td>
+            % end
+        </tbody>
+    </table>
+
+
+    <div class="control">
+        <a class="button is-danger is-light is-rounded level" href="/">Nazaj</a>
+    </div>
