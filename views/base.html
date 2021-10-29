@@ -20,6 +20,15 @@
                         <strong>GRADBENA DELA</strong>
                   </span>
                 </div>
+                % if uporabnisko_ime:
+                <div class="navbar-menu">
+                  <div class="navbar-item">
+                    <form method="GET" action="/shramba/">
+                      <button class="button is-light is-rounded">Shramba</button>
+                    </form>
+                  </div>
+                </div>
+                % end
                 <div class="navbar-end">
                   <div class="navbar-item">
                     <div class="buttons">

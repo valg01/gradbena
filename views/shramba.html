@@ -1,0 +1,27 @@
+% rebase('base.html')
+    {{potreba}}
+    % if potreba:
+        <p>Za delo na objektu potrebujete:</p>
+        % for material in potreba:
+        <ul>
+            <li>{{material}}</li>
+        </ul>
+        %end
+    % else:
+        <p>Trenutno za dokončanje del ne potrebujete nobenega materiala.</p>
+    % end
+
+    % if shramba:
+        <p>V shrambi imate:</p>
+        % for material in shramba:
+            <ul>
+                <li>{{material}}</li>
+            </ul>
+        % end
+    % else:
+        <p>Trenutno imate prazno shrambo.</p>
+        <form method="POST" action="/dodaj-material/">
+            <input class="input is-small" type="text" name="material" placeholder="material">
+            <button class="button is-small is-rounded is-primary is-light" type="submit">Dodaj</button>
+        </form>
+    % end

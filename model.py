@@ -6,6 +6,7 @@ class Hisa:
         self.ime = ime
         self.proracun = proracun
         self.prostori = []
+        self.shramba = []
         self.aktualni_prostor = None
     
     def preimenuj(self, novo_ime):
@@ -43,6 +44,16 @@ class Hisa:
             self.proracun = -1 * int(k)
         else:
             self.proracun = int(self.proracun) - k
+    
+    def potrebni_materiali(self):
+        sez = []
+        for prostor in self.prostori:
+            for delo in prostor.dela:
+                if delo.material:
+                    sez.append(delo.material)
+
+    def dodaj_material(self, material):
+        self.shramba.append(material)
 
     def stevilo_opravljenih(self):
         opravljeni = 0
@@ -89,6 +100,7 @@ class Hisa:
         "ime" : self.ime,
         "proracun" : self.proracun,
         "prostori": [prostor.v_slovar() for prostor in self.prostori],
+        "shramba": self.shramba,
         "aktualni_prostor": self.prostori.index(self.aktualni_prostor) if self.aktualni_prostor else None,
         }
     
@@ -100,6 +112,7 @@ class Hisa:
         hisa.prostori = [
             Prostor.iz_slovarja(prostor) for prostor in slovar["prostori"]
         ]
+        hisa.shramba = slovar["shramba"]
         if slovar["aktualni_prostor"] is not None:
             hisa.aktualni_prostor = hisa.prostori[slovar["aktualni_prostor"]]
         return hisa
@@ -148,16 +161,7 @@ class Prostor:
         for delo in self.dela:
             skupna_cena += int(delo.cena)
         return skupna_cena 
-    
-    def mnozica_materialov(self):
-        mn = {}
-        for delo in self.dela:
-            if not delo.material:
-                pass
-            else:
-                mn.add(delo.material)
-        return mn
-    
+
     def v_slovar(self):
         return {
             "ime" : self.ime,

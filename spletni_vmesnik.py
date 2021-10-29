@@ -158,6 +158,22 @@ def dodaj_proracun():
     shrani_uporabnika(moj_model)
     bottle.redirect("/")
 
+@bottle.get("/shramba/")
+def shramba():
+    moj_model = nalozi_uporabnikovo_stanje()
+    return bottle.template(
+        "shramba.html",
+        shramba=moj_model.shramba,
+        potreba=moj_model.potrebni_materiali())
+
+@bottle.post("/dodaj-material/")
+def dodaj_material():
+    material = bottle.request.forms.getunicode("material")
+    moj_model=nalozi_uporabnikovo_stanje()
+    moj_model.dodaj_material(material)
+    shrani_uporabnika(moj_model)
+    bottle.redirect("/shramba/")
+
 @bottle.error(404)
 def error_404(error):
     return "Ta stran žal ne obstaja!"
