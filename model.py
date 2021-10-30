@@ -78,10 +78,7 @@ class Hisa:
         if vsa_dela == 0:
             return 0
         return round(opravljeni / vsa_dela, 2)
-    
-    def delez_neopravljenih(self):
-        return 1 - self.delez_opravljenih()
-
+ 
     def skupno_stevilo_zamujenih(self):
         st = 0
         for prostor in self.prostori:
@@ -89,7 +86,6 @@ class Hisa:
         return st
     
     def skupno_stevilo_neopravljenih(self):
-        print(sum([prostor.stevilo_neopravljenih() for prostor in self.prostori]))
         return sum([prostor.stevilo_neopravljenih() for prostor in self.prostori])
     
     def dodaj_delo(self, delo):
