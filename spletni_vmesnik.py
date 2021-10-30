@@ -105,12 +105,8 @@ def dodaj_prostor_post():
 @bottle.post("/odstrani-prostor/")
 def odstrani_prostor():
     moj_model=nalozi_uporabnikovo_stanje()
-    indeks = bottle.request.forms.getunicode("indeks1") 
-    if indeks == None:
-        indeks = 0
-    else:
-        indeks=indeks
-    prostor = moj_model.prostori[int(indeks)]
+    indeks = bottle.request.forms.getunicode("indeks1")
+    prostor = moj_model.prostori[int(indeks)] if indeks else moj_model.prostori[0]
     moj_model.odstrani_prostor(prostor)
     shrani_uporabnika(moj_model)
     bottle.redirect("/")
