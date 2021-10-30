@@ -49,7 +49,6 @@
                         % if prostor == aktualni:
                             <button class="button is-primary" name="indeks" value="{{indeks}}">
                                 {{prostor.ime}}
-                                {{indeks}}
                                 <span class="tag is-rounded">{{prostor.stevilo_zamujenih()}}</span>
                             </button>
                         % else:
@@ -77,6 +76,8 @@
     </nav>
 
         <p style="text-align: center; font-weight: bold;">Urejenje in pregled nad delom na objektu</p>
+            % if vsa == 0:
+                <p style="text-align: center">Nimate še nobenega dela.</p>
             % if neopravljena > 4 and zamujena > 2:
                 <p style="text-align: center">{{neopravljena}} del je neopravljenih, od tega jih zamuja {{zamujena}}.</p>
             % elif neopravljena > 4 and zamujena == 2:

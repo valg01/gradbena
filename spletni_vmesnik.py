@@ -24,6 +24,7 @@ def osnovna_stran():
         prostori=moj_model.prostori,
         neopravljena=moj_model.skupno_stevilo_neopravljenih(),
         zamujena=moj_model.skupno_stevilo_zamujenih(),
+        vsa=moj_model.stevilo_del(),
         kretenizem=moj_model.aktualni_prostor.dela if moj_model.aktualni_prostor else [],
         aktualni=moj_model.aktualni_prostor,
         uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime")
@@ -105,7 +106,11 @@ def dodaj_prostor_post():
 def odstrani_prostor():
     moj_model=nalozi_uporabnikovo_stanje()
     indeks = bottle.request.forms.getunicode("indeks1") 
-    prostor = moj_model.prostori[int(indeks)] if indeks else moj_model.prostori[0]
+    if indeks == None:
+        indeks = 0
+    else:
+        indeks=indeks
+    prostor = moj_model.prostori[int(indeks)]
     moj_model.odstrani_prostor(prostor)
     shrani_uporabnika(moj_model)
     bottle.redirect("/")

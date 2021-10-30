@@ -55,6 +55,12 @@ class Hisa:
 
     def dodaj_material(self, material):
         self.shramba.append(material)
+    
+    def stevilo_del(self):
+        stevilo = 0
+        for prostor in self.prostori:
+            stevilo += prostor.stevilo_del()
+        return stevilo
 
     def stevilo_opravljenih(self):
         opravljeni = 0
