@@ -43,23 +43,27 @@
     
     <nav class=level>
         <div class=level-left>
-            <form method="POST" action="/zamenjaj-aktualni-prostor/">
+            
                 <div class="buttons has-addons field is-horizontal">
                     % for indeks, prostor in enumerate(prostori):
                         % if prostor == aktualni:
+                        <form method="POST" action="/zamenjaj-aktualni-prostor/">
                             <button class="button is-primary" name="indeks" value="{{indeks}}">
                                 {{prostor.ime}}
                                 <span class="tag is-rounded">{{prostor.stevilo_zamujenih()}}</span>
                             </button>
+                        </form>
                         % else:
-                        <button class="button is-primary is-light" name="indeks" value="{{indeks}}">
-                            {{prostor.ime}}
-                            % if prostor.stevilo_zamujenih() != 0:
-                            <span class="tag is-rounded is-danger is-light">{{prostor.stevilo_zamujenih()}}</span>
-                            % else:
-                            <span class="tag is-rounded is-info is-light">{{prostor.stevilo_neopravljenih()}}</span>
-                            % end
-                        </button>   
+                        <form method="POST" action="/zamenjaj-aktualni-prostor/">
+                            <button class="button is-primary is-light" name="indeks" value="{{indeks}}">
+                                {{prostor.ime}}
+                                % if prostor.stevilo_zamujenih() != 0:
+                                <span class="tag is-rounded is-danger is-light">{{prostor.stevilo_zamujenih()}}</span>
+                                % else:
+                                <span class="tag is-rounded is-info is-light">{{prostor.stevilo_neopravljenih()}}</span>
+                                % end
+                            </button>  
+                         </form>
                         <form method="POST" action="/odstrani-prostor/">
                             <button class="button is-danger is-rounded is-light" name="indeks1" value="{{indeks}}">X</button>
                         </form>
